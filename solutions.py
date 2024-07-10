@@ -77,4 +77,16 @@ class Solution:
                 new_list.append(item)
         return count, new_list
 
-print(Solution().removeElement(nums = [3,2,2,3], val = 3))
+    def removeDuplicates(self, nums: List[int]) -> int:
+        previous = int
+        count = 0
+        for index, current in enumerate(nums):
+            if current == previous:
+                nums[index] = 101
+            else:
+                count +=1 
+            previous = current
+        nums.sort()
+        return count
+
+print(Solution().removeDuplicates(nums = [0,0,1,1,1,2,2,3,3,4]))
