@@ -13,6 +13,13 @@ class Solution:
                 if index_a != index_b and item_a + item_b == target:
                     return [index_a, index_b]
 
+    def isPalindrome(self, x: int) -> bool:
+        string_val = str(x)
+        check = []
+        for index, char in enumerate(string_val):
+            check.append(char == string_val[-(index+1)])
+        return all(check)
+
     def romanToInt(self, s: str) -> int:
         values = {
             "I":1,
