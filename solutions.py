@@ -7,6 +7,12 @@ class ListNode:
         self.next = next
     
 class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        for index_a, item_a in enumerate(nums):
+            for index_b, item_b in enumerate(nums):
+                if index_a != index_b and item_a + item_b == target:
+                    return [index_a, index_b]
+
     def romanToInt(self, s: str) -> int:
         values = {
             "I":1,
