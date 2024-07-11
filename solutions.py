@@ -1,5 +1,6 @@
 
 from typing import List, Optional
+import re
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -101,4 +102,15 @@ class Solution:
         nums.sort()
         return count
 
-print(Solution().removeDuplicates(nums = [0,0,1,1,1,2,2,3,3,4]))
+    def strStr(self, haystack: str, needle: str) -> int:
+            return haystack.find(needle)
+
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        for index, num in enumerate(nums):
+            if num == target:
+                return index
+            elif num > target:
+                return index
+        return len(nums)
+
+print(Solution().searchInsert(nums = [1,3,5,6], target = 5))
