@@ -81,14 +81,13 @@ class Solution:
         return not opened
 
     def removeElement(self, nums: List[int], val: int) -> int:
-        new_list = []
         count = 0
-        for item in nums:
+        for index, item in enumerate(nums):
             if item == val:
                 count += 1
-            else:
-                new_list.append(item)
-        return count, new_list
+                nums[index] = 101
+        nums.sort()
+        return len(nums) - count
 
     def removeDuplicates(self, nums: List[int]) -> int:
         previous = int
