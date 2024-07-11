@@ -107,10 +107,11 @@ class Solution:
 
     def searchInsert(self, nums: List[int], target: int) -> int:
         for index, num in enumerate(nums):
-            if num == target:
-                return index
-            elif num > target:
+            if num >= target:
                 return index
         return len(nums)
+
+    def lengthOfLastWord(self, s: str) -> int:
+        return len(s.strip().split(" ")[-1])
 
 print(Solution().searchInsert(nums = [1,3,5,6], target = 5))
