@@ -1,4 +1,5 @@
 
+from statistics import median
 from typing import List, Optional
 import re
 # Definition for singly-linked list.
@@ -114,4 +115,16 @@ class Solution:
     def lengthOfLastWord(self, s: str) -> int:
         return len(s.strip().split(" ")[-1])
 
-print(Solution().searchInsert(nums = [1,3,5,6], target = 5))
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        nums1.extend(nums2)
+        nums1 = sorted(nums1)
+        if len(nums1) % 2 == 1:
+            middle = int((len(nums1) + 1 ) / 2) - 1
+            return nums1[middle]
+        else:
+            middle = int(len(nums1)/2)
+            middle_1 = middle - 1
+            return (nums1[middle] + nums1[middle_1]) / 2
+        # return median(sorted(nums1+nums2))
+
+print(Solution().findMedianSortedArrays(nums1 = [], nums2 = [2,3]))
