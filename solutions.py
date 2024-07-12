@@ -157,5 +157,9 @@ class Solution:
         except ValueError:
             return 0
 
+    def isMatch(self, s: str, p: str) -> bool:
+        while "**" in p:
+            p = p.replace("**","*")
+        return re.fullmatch(fr"{p}", s)
 
-print(Solution().myAtoi("  -0012a42"))
+print(Solution().isMatch(s = "abc", p = "a***abc"))
