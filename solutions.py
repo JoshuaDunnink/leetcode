@@ -159,7 +159,47 @@ class Solution:
 
     def isMatch(self, s: str, p: str) -> bool:
         while "**" in p:
-            p = p.replace("**","*")
-        return re.fullmatch(fr"{p}", s)
+            p = p.replace("**", "*")
+        return re.fullmatch(rf"{p}", s) == True
 
-print(Solution().isMatch(s = "abc", p = "a***abc"))
+    def maximumGain(self, s: str, x: int, y: int) -> int:
+        def get_score(score: int, points: int, stack: list, string: str):
+            new_stack = []
+            for char in stack:
+                if (
+                    len(new_stack) >= 1
+                    and new_stack[-1] == string[0]
+                    and char == string[1]
+                ):
+                    score += points
+                    new_stack.pop()
+                else:
+                    new_stack.append(char)
+            return score, new_stack
+
+        score = 0
+        if x > y:
+            high = "ab"
+            high_score = x
+            low = "ba"
+            low_score = y
+        else:
+            high = "ba"
+            high_score = y
+            low = "ab"
+            low_score = x
+
+        stack = list(s)
+        score, stack = get_score(score, high_score, stack, high)
+        score, _ = get_score(score, low_score, stack, low)
+
+        return score
+
+
+print(
+    Solution().maximumGain(
+        s="aabbaaxybbaabb",
+        x=5,
+        y=4,
+    )
+)
