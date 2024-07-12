@@ -1,13 +1,15 @@
-
 from statistics import median
 from typing import List, Optional
 import re
+
+
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
-    
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for index_a, item_a in enumerate(nums):
@@ -19,30 +21,30 @@ class Solution:
         string_val = str(x)
         check = []
         for index, char in enumerate(string_val):
-            check.append(char == string_val[-(index+1)])
+            check.append(char == string_val[-(index + 1)])
         return all(check)
 
     def romanToInt(self, s: str) -> int:
         values = {
-            "I":1,
-            "V":5,
-            "X":10,
-            "L":50,
-            "C":100,
-            "D":500,
-            "M":1000,
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 50,
+            "C": 100,
+            "D": 500,
+            "M": 1000,
         }
         count = 0
         previous = ""
         for index, char in enumerate(s):
-            if index < len(s)-1:
-                if values.get(char) >= values.get(s[index+1]):
+            if index < len(s) - 1:
+                if values.get(char) >= values.get(s[index + 1]):
                     if not previous:
                         count += values.get(char)
                     else:
                         count += values.get(char) - values.get(previous)
                         previous = ""
-                elif values.get(char) < values.get(s[index+1]):
+                elif values.get(char) < values.get(s[index + 1]):
                     previous = char
             elif previous:
                 count += values.get(char) - values.get(previous)
@@ -57,7 +59,7 @@ class Solution:
         for index, char in enumerate(word_1):
             checks = []
             for item in strs:
-                if index <= len(item)-1:
+                if index <= len(item) - 1:
                     if item[index] == char:
                         checks.append(True)
                     else:
@@ -65,7 +67,7 @@ class Solution:
                         breaking = True
                         break
             if all(checks) and not breaking:
-                common+=char
+                common += char
             elif breaking:
                 break
         return common
@@ -73,7 +75,7 @@ class Solution:
     def isValid(self, s: str) -> bool:
         opened = []
         closing_mapping = {")": "(", "}": "{", "]": "["}
-    
+
         for char in s:
             if char in closing_mapping.keys():
                 if not opened or opened.pop() != closing_mapping[char]:
@@ -98,13 +100,13 @@ class Solution:
             if current == previous:
                 nums[index] = 101
             else:
-                count +=1 
+                count += 1
             previous = current
         nums.sort()
         return count
 
     def strStr(self, haystack: str, needle: str) -> int:
-            return haystack.find(needle)
+        return haystack.find(needle)
 
     def searchInsert(self, nums: List[int], target: int) -> int:
         for index, num in enumerate(nums):
@@ -119,12 +121,41 @@ class Solution:
         nums1.extend(nums2)
         nums1 = sorted(nums1)
         if len(nums1) % 2 == 1:
-            middle = int((len(nums1) + 1 ) / 2) - 1
+            middle = int((len(nums1) + 1) / 2) - 1
             return nums1[middle]
         else:
-            middle = int(len(nums1)/2)
+            middle = int(len(nums1) / 2)
             middle_1 = middle - 1
             return (nums1[middle] + nums1[middle_1]) / 2
         # return median(sorted(nums1+nums2))
 
-print(Solution().findMedianSortedArrays(nums1 = [], nums2 = [2,3]))
+    def myAtoi(self, s: str) -> int:
+        number = ""
+        number_started = False
+        try:
+            number = int(s.strip())
+        except ValueError:
+            for char in s.strip():
+                if (
+                    (not char.isnumeric() and char in ["-", "+"] and not number_started)
+                    or (char.isnumeric() and not number_started)
+                    or (char.isnumeric() and number_started)
+                ):
+                    number += char
+                    number_started = True
+                elif (not char.isnumeric() and not number_started) or (
+                    not char.isnumeric() and number_started
+                ):
+                    break
+        try:
+            number = int(number)
+            if int(number) <= -2147483648:
+                return -2147483648
+            elif int(number) >= 2147483648:
+                return 2147483647
+            return int(number)
+        except ValueError:
+            return 0
+
+
+print(Solution().myAtoi("  -0012a42"))
