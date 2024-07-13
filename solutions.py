@@ -1,5 +1,6 @@
 from statistics import median
 from typing import List, Optional
+from itertools import combinations, permutations
 import re
 
 
@@ -195,11 +196,50 @@ class Solution:
 
         return score
 
+    def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
+        def walk(robot):
+            if robot[2] == "R":
+                robot[0] += 1
+            else:
+                robot[0] -= 1
+            return robot
+
+        if directions.count("R") == len(positions) or directions.count("L") == len(positions):
+            return healths
+
+        robots = {}
+        for i, position in enumerate(positions):
+            robots.update({i:[position, healths[i], directions[i]]})
+
+        for key, robot in robots.items():
+            robots.update({key:walk(robot)})
+        
+        for key, robot in robots.items():
+            for key_2, robot_2 in robots.items():
+                if not key == key_2:
+                    if robot[0] == robot_2[0]:
+                        if robot:
+                            pass
+        # scenarios:
+        # after collisions they all walk the same way
+        # after collisions they walk away from eachother
+
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        # combinations = too slow
+        possible = []
+        for combination in combinations(nums, 4):
+            if sum(combination) == target:
+                possible.append(tuple(sorted(combination)))
+        cleanup = [list(item) for item in set(possible)]
+        return cleanup
+
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        for mutation in permutations(nums):
+            result.append(mutation)
+        return [list(num) for num in set(result)]
+
 
 print(
-    Solution().maximumGain(
-        s="aabbaaxybbaabb",
-        x=5,
-        y=4,
-    )
+    Solution().permuteUnique(nums = [1,1,2])
 )
