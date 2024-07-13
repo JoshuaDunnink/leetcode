@@ -197,6 +197,7 @@ class Solution:
         return score
 
     def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
+        #TODO 2751
         def walk(robot):
             if robot[2] == "R":
                 robot[0] += 1
@@ -225,7 +226,7 @@ class Solution:
         # after collisions they walk away from eachother
 
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        # combinations = too slow
+        #TODO 18 combinations = too slow
         possible = []
         for combination in combinations(nums, 4):
             if sum(combination) == target:
