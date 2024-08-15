@@ -239,8 +239,44 @@ class Solution:
         for mutation in permutations(nums):
             result.append(mutation)
         return [list(num) for num in set(result)]
+    
+    def reverse(self, x: int) -> int:
+        new_x = str()
+        str_x = str(x)
+        if str_x[0] == "-":
+            new_x += "-"
+        
+        for index in range(len(str_x)-1, -1 , -1):
+            if str_x[index] != "-":
+                new_x += str_x[index]
 
+        if -2**31 < int(new_x) < 2**31:
+            return int(new_x)
+        else:
+            return 0
+
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        fives = 0
+        tens = 0
+        for bill in bills:
+            if bill == 5:
+                fives += 1
+            elif bill == 10:
+                if fives >= 1:
+                    tens += 1
+                    fives -= 1
+                else:
+                    return False
+            elif bill == 20:
+                if tens >= 1 and fives >= 1:
+                    fives -= 1
+                    tens -= 1
+                elif fives>= 3:
+                    fives -= 3
+                else:
+                    return False
+        return True
 
 print(
-    Solution().permuteUnique(nums = [1,1,2])
+    Solution().lemonadeChange([5,5,10,10,20])
 )
