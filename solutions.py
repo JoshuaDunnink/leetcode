@@ -10,6 +10,12 @@ class ListNode:
         self.val = val
         self.next = next
 
+    @staticmethod
+    def create_listnodes(list):
+        list_node = None
+        for item in list[::-1]:
+            list_node = ListNode(item, list_node)
+        return list_node
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -348,8 +354,46 @@ class Solution:
         # backtrack(0, [])
         # return result
 
+    def search(self, nums: List[int], target: int) -> bool:
+        # TODO 81: binary search instead of simple
+        return target in nums
+
+    def search(self, nums: List[int], target: int) -> int:
+        # TODO 33: binary search instead of simple
+        if target not in nums:
+            return -1
+        else:
+            return nums.index(target)
+
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        clean = []
+        if head is not None:
+            count = {head.val:1}
+            another = False
+            if head.next is not None:
+                next_head = head.next
+                another = True
+
+            while another:
+                if next_head.val not in count.keys():
+                    count.update({next_head.val:1})
+                else:
+                    count[next_head.val] += 1
+                if next_head.next == None:
+                    another = False
+                else:
+                    next_head = next_head.next
+
+            clean = [k for k,v in count.items() if v == 1]
+            clean.sort()
+
+        # list_node = None
+        # for item in clean[::-1]:
+        #     list_node = ListNode(item, list_node)
+        return ListNode.create_listnodes(clean)
+            
 
 print(
-    Solution().letterCombinations("23")
+    Solution().deleteDuplicates(ListNode.create_listnodes([1,2,3,3,4,4,5]))
 )
 
