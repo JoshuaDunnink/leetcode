@@ -291,9 +291,34 @@ class Solution:
                 if n_arrays > 10:
                     small_done.add(small_val)
         return diff
+    
+    # def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+    #     result = []
+    #     for r in range(1, len(candidates) + 1):
+    #         for combo in combinations(candidates, r):
+    #             if sum(combo) == target:
+    #                 result.append(combo)
+    #     return result
 
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        def backtrack(start, path, target):
+            if target == 0:
+                result.add(tuple(path))
+                return
+            if target < 0:
+                return
+            for i in range(start, len(candidates)):
+                if i > start and candidates[i] == candidates[i - 1]:
+                    continue
+                backtrack(i + 1, path + [candidates[i]], target - candidates[i])
+
+        result = set()
+        candidates.sort()
+        backtrack(0, [], target)
+        return list(result)
 
 
 print(
-    Solution().maxDistance([[-3,-3,-1,-1],[-3,-2]])
+    Solution().combinationSum2([10,1,2,7,6,1,5], 8)
 )
+
