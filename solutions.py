@@ -1,6 +1,6 @@
 from statistics import median
 from typing import List, Optional
-from itertools import combinations, permutations
+from itertools import combinations, permutations, product
 import re
 
 
@@ -226,7 +226,7 @@ class Solution:
         # after collisions they walk away from eachother
 
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        #TODO 18 combinations = too slow
+        #TODO 18 combinations = too slow -> use backtracking
         possible = []
         for combination in combinations(nums, 4):
             if sum(combination) == target:
@@ -292,33 +292,64 @@ class Solution:
                     small_done.add(small_val)
         return diff
     
-    # def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-    #     result = []
-    #     for r in range(1, len(candidates) + 1):
-    #         for combo in combinations(candidates, r):
-    #             if sum(combo) == target:
-    #                 result.append(combo)
-    #     return result
-
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        def backtrack(start, path, target):
-            if target == 0:
-                result.add(tuple(path))
-                return
-            if target < 0:
-                return
-            for i in range(start, len(candidates)):
-                if i > start and candidates[i] == candidates[i - 1]:
-                    continue
-                backtrack(i + 1, path + [candidates[i]], target - candidates[i])
-
         result = set()
-        candidates.sort()
-        backtrack(0, [], target)
+        for r in range(1, len(candidates) + 1):
+            for combo in combinations(candidates, r):
+                if sum(combo) == target:
+                    result.add(tuple(combo))
         return list(result)
+
+    # def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+    #     def backtrack(start, path, target):
+    #         if target == 0:
+    #             result.add(tuple(path))
+    #             return
+    #         if target < 0:
+    #             return
+    #         for i in range(start, len(candidates)):
+    #             if i > start and candidates[i] == candidates[i - 1]:
+    #                 continue
+    #             backtrack(i + 1, path + [candidates[i]], target - candidates[i])
+
+    #     result = set()
+    #     candidates.sort()
+    #     backtrack(0, [], target)
+    #     return list(result)
+
+    def letterCombinations(self, digits: str) -> List[str]:
+        combinations = {
+            "2":"abc",
+            "3":"def",
+            "4":"ghi",
+            "5":"jkl",
+            "6":"mno",
+            "7":"pqrs",
+            "8":"tuv",
+            "9":"wxyz",
+            "0":" ",
+        }
+        letters = []
+        if not digits:
+            return []
+        for digit in digits:
+            letters.append(combinations.get(digit))
+        return ["".join(items) for items in product(*letters)]
+
+        # def backtrack(index, path):
+        #     if index == len(digits):
+        #         result.append("".join(path))
+        #         return
+        #     possible_letters = combinations[digits[index]]
+        #     for letter in possible_letters:
+        #         backtrack(index + 1, path + [letter])
+
+        # result = []
+        # backtrack(0, [])
+        # return result
 
 
 print(
-    Solution().combinationSum2([10,1,2,7,6,1,5], 8)
+    Solution().letterCombinations("23")
 )
 
