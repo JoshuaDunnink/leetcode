@@ -277,6 +277,23 @@ class Solution:
                     return False
         return True
 
+    def maxDistance(self, arrays: List[List[int]]) -> int:
+        diff = 0
+        small_vals = [items[0] for items in arrays]
+        high_vals = [items[-1] for items in arrays]
+        small_done = set()
+        n_arrays = len(arrays)
+        for i_small, small_val in enumerate(small_vals):
+            if  small_val not in small_done:
+                for i_high, high_val in enumerate(high_vals):
+                    if i_small != i_high and high_val - small_val > diff:
+                        diff = high_val - small_val
+                if n_arrays > 10:
+                    small_done.add(small_val)
+        return diff
+
+
+
 print(
-    Solution().lemonadeChange([5,5,10,10,20])
+    Solution().maxDistance([[-3,-3,-1,-1],[-3,-2]])
 )
