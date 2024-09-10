@@ -2,6 +2,7 @@ from statistics import median
 from typing import List, Optional
 from itertools import combinations, permutations, product
 import re
+import pprint
 
 
 # Definition for singly-linked list.
@@ -392,8 +393,81 @@ class Solution:
         #     list_node = ListNode(item, list_node)
         return ListNode.create_listnodes(clean)
             
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        # backtracking, iterative refinement is not possible
+        """51
+        Input: n = 4
+        Returns: Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+        Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above
+        """
+        possible_boards = []
+        board = []
+        for _ in range(n):
+            board.append(["." if x != 0 else "Q" for x in range(n)])
+            pprint.pprint(board)
+
+    def getPermutation(self, n: int, k: int) -> str:
+        """60
+        The set [1, 2, 3, ..., n] contains a total of n! unique permutations.
+        By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+
+            "123"
+            "132"
+            "213"
+            "231"
+            "312"
+            "321"
+
+        Given n and k, return the kth permutation sequence.
+        """
+        def backtrack(sequence, i):
+            if i > n:
+                return
+            if i == n:
+                pass
+
+
+    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # 2807
+        def get_bcd(val1, val2) -> int:
+            if val1 >= val2:
+                big = val1
+                small = val2
+            else:
+                big = val2
+                small = val1
+            for i in range(small, 0, -1):
+                if big % i == 0 and small % i == 0:
+                    return i
+
+        decomposed = []
+        while True:
+            decomposed.append(head.val)
+            if head.next != None:
+                head = head.next
+            else:
+                break
+
+        new_list = []
+        i = 0
+        if len(decomposed) == 1:
+            return head
+        for num1 in decomposed:
+            num2 = decomposed[i+1]
+            gcd = get_bcd(num1, num2)
+            new_list.extend([num1, gcd])
+            i += 1
+            if i+1 >= len(decomposed):
+                new_list.extend([decomposed[-1]])
+                break
+        
+        list_node = None
+        for item in new_list[::-1]:
+            list_node = ListNode(item, list_node)
+        return list_node
+
 
 print(
-    Solution().deleteDuplicates(ListNode.create_listnodes([1,2,3,3,4,4,5]))
+    Solution().insertGreatestCommonDivisors(ListNode.create_listnodes([18,6,10,3]))
 )
 
