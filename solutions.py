@@ -18,6 +18,7 @@ class ListNode:
             list_node = ListNode(item, list_node)
         return list_node
 
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for index_a, item_a in enumerate(nums):
@@ -125,7 +126,9 @@ class Solution:
     def lengthOfLastWord(self, s: str) -> int:
         return len(s.strip().split(" ")[-1])
 
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+    def findMedianSortedArrays(
+        self, nums1: List[int], nums2: List[int]
+    ) -> float:
         nums1.extend(nums2)
         nums1 = sorted(nums1)
         if len(nums1) % 2 == 1:
@@ -145,7 +148,11 @@ class Solution:
         except ValueError:
             for char in s.strip():
                 if (
-                    (not char.isnumeric() and char in ["-", "+"] and not number_started)
+                    (
+                        not char.isnumeric()
+                        and char in ["-", "+"]
+                        and not number_started
+                    )
                     or (char.isnumeric() and not number_started)
                     or (char.isnumeric() and number_started)
                 ):
@@ -203,8 +210,10 @@ class Solution:
 
         return score
 
-    def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
-        #TODO 2751
+    def survivedRobotsHealths(
+        self, positions: List[int], healths: List[int], directions: str
+    ) -> List[int]:
+        # TODO 2751
         def walk(robot):
             if robot[2] == "R":
                 robot[0] += 1
@@ -212,16 +221,18 @@ class Solution:
                 robot[0] -= 1
             return robot
 
-        if directions.count("R") == len(positions) or directions.count("L") == len(positions):
+        if directions.count("R") == len(positions) or directions.count(
+            "L"
+        ) == len(positions):
             return healths
 
         robots = {}
         for i, position in enumerate(positions):
-            robots.update({i:[position, healths[i], directions[i]]})
+            robots.update({i: [position, healths[i], directions[i]]})
 
         for key, robot in robots.items():
-            robots.update({key:walk(robot)})
-        
+            robots.update({key: walk(robot)})
+
         for key, robot in robots.items():
             for key_2, robot_2 in robots.items():
                 if not key == key_2:
@@ -233,7 +244,7 @@ class Solution:
         # after collisions they walk away from eachother
 
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        #TODO 18 combinations = too slow -> use backtracking
+        # TODO 18 combinations = too slow -> use backtracking
         possible = []
         for combination in combinations(nums, 4):
             if sum(combination) == target:
@@ -246,18 +257,18 @@ class Solution:
         for mutation in permutations(nums):
             result.append(mutation)
         return [list(num) for num in set(result)]
-    
+
     def reverse(self, x: int) -> int:
         new_x = str()
         str_x = str(x)
         if str_x[0] == "-":
             new_x += "-"
-        
-        for index in range(len(str_x)-1, -1 , -1):
+
+        for index in range(len(str_x) - 1, -1, -1):
             if str_x[index] != "-":
                 new_x += str_x[index]
 
-        if -2**31 < int(new_x) < 2**31:
+        if -(2**31) < int(new_x) < 2**31:
             return int(new_x)
         else:
             return 0
@@ -278,7 +289,7 @@ class Solution:
                 if tens >= 1 and fives >= 1:
                     fives -= 1
                     tens -= 1
-                elif fives>= 3:
+                elif fives >= 3:
                     fives -= 3
                 else:
                     return False
@@ -291,15 +302,17 @@ class Solution:
         small_done = set()
         n_arrays = len(arrays)
         for i_small, small_val in enumerate(small_vals):
-            if  small_val not in small_done:
+            if small_val not in small_done:
                 for i_high, high_val in enumerate(high_vals):
                     if i_small != i_high and high_val - small_val > diff:
                         diff = high_val - small_val
                 if n_arrays > 10:
                     small_done.add(small_val)
         return diff
-    
-    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+
+    def combinationSum2(
+        self, candidates: List[int], target: int
+    ) -> List[List[int]]:
         result = set()
         for r in range(1, len(candidates) + 1):
             for combo in combinations(candidates, r):
@@ -326,15 +339,15 @@ class Solution:
 
     def letterCombinations(self, digits: str) -> List[str]:
         combinations = {
-            "2":"abc",
-            "3":"def",
-            "4":"ghi",
-            "5":"jkl",
-            "6":"mno",
-            "7":"pqrs",
-            "8":"tuv",
-            "9":"wxyz",
-            "0":" ",
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
+            "0": " ",
         }
         letters = []
         if not digits:
@@ -369,7 +382,7 @@ class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         clean = []
         if head is not None:
-            count = {head.val:1}
+            count = {head.val: 1}
             another = False
             if head.next is not None:
                 next_head = head.next
@@ -377,7 +390,7 @@ class Solution:
 
             while another:
                 if next_head.val not in count.keys():
-                    count.update({next_head.val:1})
+                    count.update({next_head.val: 1})
                 else:
                     count[next_head.val] += 1
                 if next_head.next == None:
@@ -385,14 +398,14 @@ class Solution:
                 else:
                     next_head = next_head.next
 
-            clean = [k for k,v in count.items() if v == 1]
+            clean = [k for k, v in count.items() if v == 1]
             clean.sort()
 
         # list_node = None
         # for item in clean[::-1]:
         #     list_node = ListNode(item, list_node)
         return ListNode.create_listnodes(clean)
-            
+
     def solveNQueens(self, n: int) -> List[List[str]]:
         # backtracking, iterative refinement is not possible
         """51
@@ -420,14 +433,16 @@ class Solution:
 
         Given n and k, return the kth permutation sequence.
         """
+
         def backtrack(sequence, i):
             if i > n:
                 return
             if i == n:
                 pass
 
-
-    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def insertGreatestCommonDivisors(
+        self, head: Optional[ListNode]
+    ) -> Optional[ListNode]:
         # 2807
         def get_bcd(val1, val2) -> int:
             if val1 >= val2:
@@ -453,21 +468,35 @@ class Solution:
         if len(decomposed) == 1:
             return head
         for num1 in decomposed:
-            num2 = decomposed[i+1]
+            num2 = decomposed[i + 1]
             gcd = get_bcd(num1, num2)
             new_list.extend([num1, gcd])
             i += 1
-            if i+1 >= len(decomposed):
+            if i + 1 >= len(decomposed):
                 new_list.extend([decomposed[-1]])
                 break
-        
+
         list_node = None
         for item in new_list[::-1]:
             list_node = ListNode(item, list_node)
         return list_node
 
+    def countConsistentStrings(self, allowed: str, words: List[str]) -> int:
+        # 1684
+        count = 0
+        for word in words:
+            consistant = True
+            for w_char in word:
+                if w_char not in allowed:
+                    consistant = False
+                    break
+            if consistant:
+                count += 1
+        return count
+
 
 print(
-    Solution().insertGreatestCommonDivisors(ListNode.create_listnodes([18,6,10,3]))
+    Solution().countConsistentStrings(
+        "ab", ["ad", "bd", "aaab", "baa", "badab"]
+    )
 )
-
