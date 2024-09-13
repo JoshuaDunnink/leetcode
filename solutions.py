@@ -1,6 +1,7 @@
 from statistics import median
 from typing import List, Optional
 from itertools import combinations, permutations, product
+from functools import reduce
 import re
 import pprint
 
@@ -494,9 +495,43 @@ class Solution:
                 count += 1
         return count
 
+    def xorQueries(
+        self, arr: List[int], queries: List[List[int]]
+    ) -> List[int]:
+    # 1310
+        # brute force to slow need pre-created list
+        # for query in queries:
+        #     subarray = arr[query[0]:query[1]+1]
+        #     addative = reduce(lambda x, y: x ^ y, subarray)
+        #     outcome.append(addative)
+        # OR
+        # for query in queries:
+        #     addative = 0
+        #     subarray = arr[query[0]:query[1]+1]
+        #     for num in subarray:
+        #         if addative == 0:
+        #             addative = num
+        #         else:
+        #             addative = int(bin(addative),2)^int(bin(num),2)
+        #     outcome.append(addative)
+
+        outcome = []
+
+        def compute_prefix_xor(arr):
+            prefix_xor = [0] * (len(arr) + 1)
+            for i in range(len(arr)):
+                prefix_xor[i+1] = prefix_xor[i] ^ arr[i]
+            return prefix_xor
+        
+        prepared = compute_prefix_xor(arr)
+        for left, right in queries:
+            outcome.append(prepared[left] ^ prepared[right+1])
+
+        return outcome
+
 
 print(
-    Solution().countConsistentStrings(
-        "ab", ["ad", "bd", "aaab", "baa", "badab"]
+    Solution().xorQueries(
+        arr=[1, 3, 4, 8], queries=[[0, 1], [1, 2], [0, 3], [3, 3]]
     )
 )
