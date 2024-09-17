@@ -548,8 +548,26 @@ class Solution:
                 odd.append(key)
         return odd
 
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # 2
+        number1 = str(l1.val)
+        number2 = str(l2.val)
+
+        while l1.next != None:
+            l1 = l1.next
+            number1+=str(l1.val)
+        while l2.next != None:
+            l2 = l2.next
+            number2+=str(l2.val)
+
+        summation = int(number1[::-1]) + int(number2[::-1])
+        list_node = None
+        for item in str(summation):
+            list_node = ListNode(int(item), list_node)
+        return list_node
+
 print(
-    Solution().uncommonFromSentences(
-        s1 = "apple apple", s2 = "banana"
+    Solution().addTwoNumbers(
+        l1 = ListNode.create_listnodes([2,4,3]), l2 = ListNode.create_listnodes([5,6,4])
     )
 )
