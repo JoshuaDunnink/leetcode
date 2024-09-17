@@ -566,8 +566,13 @@ class Solution:
             list_node = ListNode(int(item), list_node)
         return list_node
 
+    def addBinary(self, a: str, b: str) -> str:
+        # 67
+        return bin(int(a,2) + int(b,2))[2::]
+        #return bin(int("0b"+a,2) + int("0b"+b,2)).replace("0b", "")
+
 print(
-    Solution().addTwoNumbers(
-        l1 = ListNode.create_listnodes([2,4,3]), l2 = ListNode.create_listnodes([5,6,4])
+    Solution().addBinary(
+       a = "11", b = "1"
     )
 )
