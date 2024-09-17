@@ -526,12 +526,30 @@ class Solution:
         prepared = compute_prefix_xor(arr)
         for left, right in queries:
             outcome.append(prepared[left] ^ prepared[right+1])
-
         return outcome
 
 
+    def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
+        # 884
+        def update_count(count: dict= {}, string: str= ""):
+            for word in string.split(" "):
+                if not count.get(word):
+                    count.update({word: 1})
+                else:
+                    count[word] += 1
+            return count
+
+        count = update_count(string = s1)
+        count = update_count(count, s2)
+
+        odd = []
+        for key, value in count.items():
+            if value == 1:
+                odd.append(key)
+        return odd
+
 print(
-    Solution().xorQueries(
-        arr=[1, 3, 4, 8], queries=[[0, 1], [1, 2], [0, 3], [3, 3]]
+    Solution().uncommonFromSentences(
+        s1 = "apple apple", s2 = "banana"
     )
 )
