@@ -572,7 +572,23 @@ class Solution:
         #return bin(int("0b"+a,2) + int("0b"+b,2)).replace("0b", "")
 
     def shortestPalindrome(self, s: str) -> str:
-        # 214
+        # 214 -> brute force
+        """
+        alternative:
+        compare 2 strings step by step with its reversed
+          abc
+        reverse == cba
+
+        first compare
+         abc
+        cba
+
+        second
+          abc
+        cba
+        """
+
+
         def is_palindrome(s):
             if len(s) % 2 == 1:
                 center = int((len(s) + 1) / 2)
