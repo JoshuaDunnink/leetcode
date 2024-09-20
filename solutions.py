@@ -571,9 +571,42 @@ class Solution:
         return bin(int(a,2) + int(b,2))[2::]
         #return bin(int("0b"+a,2) + int("0b"+b,2)).replace("0b", "")
 
+    def shortestPalindrome(self, s: str) -> str:
+        # 214
+        def is_palindrome(s):
+            if len(s) % 2 == 1:
+                center = int((len(s) + 1) / 2)
+                return s[0:center] == s[center-1:len(s)][::-1]
+            else:
+                center = int(len(s)/2)
+                return s[0:center] == s[center:len(s)][::-1]
+            
+        def contains_palindrome(s):
+            section = ""
+            for i in range(len(s)-1, 0, -1):
+                section=s[:i]
+                if is_palindrome(section):
+                    return i
+            return 0
+    
+        if s == None:
+            return ""
+        elif is_palindrome(s):
+            return s
+        
+        i = contains_palindrome(s)
+        word = s
+        for i in range(i, len(s)):
+            char = s[i]
+            if i != 0:
+                word = (word[::-1]+char)[::-1]
+                if is_palindrome(word):
+                    return word
+    
+
 print(
-    Solution().addBinary(
-       a = "11", b = "1"
+    Solution().shortestPalindrome(
+       s = "abbacd"
     )
 )
 
