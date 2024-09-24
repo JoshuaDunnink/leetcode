@@ -20,6 +20,31 @@ class ListNode:
         return list_node
 
 
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_number = False
+
+class LongestPrefixTrie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, number):
+        node = self.root
+        for digit in str(number):
+            if digit not in node.children:
+                node.children[digit] = TrieNode()
+            node = node.children[digit]
+        node.is_end_of_number = True
+
+    def search(self, number):
+        node = self.root
+        for index, digit in enumerate(str(number)):
+            if digit not in node.children:
+                return index
+            node = node.children[digit]
+        return index + 1
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for index_a, item_a in enumerate(nums):
@@ -587,8 +612,6 @@ class Solution:
           abc
         cba
         """
-
-
         def is_palindrome(s):
             if len(s) % 2 == 1:
                 center = int((len(s) + 1) / 2)
@@ -618,11 +641,57 @@ class Solution:
                 word = (word[::-1]+char)[::-1]
                 if is_palindrome(word):
                     return word
-    
+
+    def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
+        # def get_count(num1, num2):
+        #     count = 0
+        #     for i, char in enumerate(str(num2)):
+        #         if char == str(num1)[i]:
+        #             count+=1
+        #         else:
+        #             break
+        #     return count
+        # cleaned_arr1 = set(arr1)
+        # arr1 = list(cleaned_arr1).sort(reverse=True)
+        # cleaned_arr2 = set(arr2)
+        # arr2 = list(cleaned_arr2).sort(reverse=True)
+        # max_count = 0
+        # for num1 in cleaned_arr1:
+        #     for num2 in cleaned_arr2:
+        #         if len(str(num1)) >= len(str(num2)) and len(str(num1)) > max_count:
+        #             count = get_count(num1, num2)
+        #         elif len(str(num2)) > max_count:
+        #             count = get_count(num2, num1)
+        #         max_count = count if count > max_count else max_count
+        # return max_count
+        """build trie
+
+        Args:
+            arr1 (List[int]): _description_
+            arr2 (List[int]): _description_
+
+        Returns:
+            int: _description_
+        """
+        longest_prefix = LongestPrefixTrie()
+        for number in arr1:
+            longest_prefix.insert(number)
+        
+        longest = 0
+        for number in arr2:
+            number_len = len(str(number))
+            if number_len > longest:
+                length = longest_prefix.search(number)
+                longest = length if length>longest else longest
+        
+        return longest
+
+
+
 
 print(
-    Solution().shortestPalindrome(
-       s = "abbacd"
+    Solution().longestCommonPrefix(
+       arr1 = [27,45], arr2 = [27,48]
     )
 )
 
