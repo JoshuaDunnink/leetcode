@@ -4,13 +4,15 @@ from itertools import combinations, permutations, product
 from functools import reduce
 import re
 import pprint
+from collections import defaultdict
 
 
 # Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val=None, next=None, previous = None):
         self.val = val
         self.next = next
+        self.previous = previous
 
     @staticmethod
     def create_listnodes(list):
@@ -694,4 +696,5 @@ print(
        arr1 = [27,45], arr2 = [27,48]
     )
 )
+
 
