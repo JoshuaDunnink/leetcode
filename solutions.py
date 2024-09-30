@@ -1,51 +1,10 @@
-from statistics import median
 from typing import List, Optional
 from itertools import combinations, permutations, product
-from functools import reduce
 import re
 import pprint
-from collections import defaultdict
+from nodes import ListNode
+from trie import LongestPrefixTrie
 
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=None, next=None, previous = None):
-        self.val = val
-        self.next = next
-        self.previous = previous
-
-    @staticmethod
-    def create_listnodes(list):
-        list_node = None
-        for item in list[::-1]:
-            list_node = ListNode(item, list_node)
-        return list_node
-
-
-class TrieNode:
-    def __init__(self):
-        self.children = {}
-        self.is_end_of_number = False
-
-class LongestPrefixTrie:
-    def __init__(self):
-        self.root = TrieNode()
-
-    def insert(self, number):
-        node = self.root
-        for digit in str(number):
-            if digit not in node.children:
-                node.children[digit] = TrieNode()
-            node = node.children[digit]
-        node.is_end_of_number = True
-
-    def search(self, number):
-        node = self.root
-        for index, digit in enumerate(str(number)):
-            if digit not in node.children:
-                return index
-            node = node.children[digit]
-        return index + 1
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
