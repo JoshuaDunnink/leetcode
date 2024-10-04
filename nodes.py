@@ -1,5 +1,5 @@
 class ListNode:
-    def __init__(self, val=None, next=None, previous = None):
+    def __init__(self, val=None, next=None, previous=None):
         self.val = val
         self.next = next
         self.previous = previous
@@ -7,16 +7,16 @@ class ListNode:
     @staticmethod
     def create_listnodes(list):
         list_node = None
-        for i, val in enumerate(list[::-1]):
+        for i, val in enumerate(list):
             if i == 0:
                 list_node = ListNode(val=val)
             else:
                 node = list_node
                 while node.next is not None:
                     node = node.next
-                node.next=ListNode(val=val, previous=node)
+                node.next = ListNode(val=val, previous=node)
         return list_node
-    
+
     @staticmethod
     def get_list_from_nodes(node):
         simple_list = []

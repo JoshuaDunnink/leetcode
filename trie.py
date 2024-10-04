@@ -1,5 +1,6 @@
 from nodes import TrieNode
 
+
 class LongestPrefixTrie:
     def __init__(self):
         self.root = TrieNode()

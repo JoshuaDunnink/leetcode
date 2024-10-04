@@ -484,7 +484,7 @@ class Solution:
     def xorQueries(
         self, arr: List[int], queries: List[List[int]]
     ) -> List[int]:
-    # 1310
+        # 1310
         # brute force to slow need pre-created list
         # for query in queries:
         #     subarray = arr[query[0]:query[1]+1]
@@ -506,18 +506,17 @@ class Solution:
         def compute_prefix_xor(arr):
             prefix_xor = [0] * (len(arr) + 1)
             for i in range(len(arr)):
-                prefix_xor[i+1] = prefix_xor[i] ^ arr[i]
+                prefix_xor[i + 1] = prefix_xor[i] ^ arr[i]
             return prefix_xor
-        
+
         prepared = compute_prefix_xor(arr)
         for left, right in queries:
-            outcome.append(prepared[left] ^ prepared[right+1])
+            outcome.append(prepared[left] ^ prepared[right + 1])
         return outcome
-
 
     def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
         # 884
-        def update_count(count: dict= {}, string: str= ""):
+        def update_count(count: dict = {}, string: str = ""):
             for word in string.split(" "):
                 if not count.get(word):
                     count.update({word: 1})
@@ -525,7 +524,7 @@ class Solution:
                     count[word] += 1
             return count
 
-        count = update_count(string = s1)
+        count = update_count(string=s1)
         count = update_count(count, s2)
 
         odd = []
@@ -534,17 +533,19 @@ class Solution:
                 odd.append(key)
         return odd
 
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(
+        self, l1: Optional[ListNode], l2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         # 2
         number1 = str(l1.val)
         number2 = str(l2.val)
 
         while l1.next != None:
             l1 = l1.next
-            number1+=str(l1.val)
+            number1 += str(l1.val)
         while l2.next != None:
             l2 = l2.next
-            number2+=str(l2.val)
+            number2 += str(l2.val)
 
         summation = int(number1[::-1]) + int(number2[::-1])
         list_node = None
@@ -554,8 +555,8 @@ class Solution:
 
     def addBinary(self, a: str, b: str) -> str:
         # 67
-        return bin(int(a,2) + int(b,2))[2::]
-        #return bin(int("0b"+a,2) + int("0b"+b,2)).replace("0b", "")
+        return bin(int(a, 2) + int(b, 2))[2::]
+        # return bin(int("0b"+a,2) + int("0b"+b,2)).replace("0b", "")
 
     def shortestPalindrome(self, s: str) -> str:
         # 214 -> brute force
@@ -573,33 +574,34 @@ class Solution:
           abc
         cba
         """
+
         def is_palindrome(s):
             if len(s) % 2 == 1:
                 center = int((len(s) + 1) / 2)
-                return s[0:center] == s[center-1:len(s)][::-1]
+                return s[0:center] == s[center - 1 : len(s)][::-1]
             else:
-                center = int(len(s)/2)
-                return s[0:center] == s[center:len(s)][::-1]
-            
+                center = int(len(s) / 2)
+                return s[0:center] == s[center : len(s)][::-1]
+
         def contains_palindrome(s):
             section = ""
-            for i in range(len(s)-1, 0, -1):
-                section=s[:i]
+            for i in range(len(s) - 1, 0, -1):
+                section = s[:i]
                 if is_palindrome(section):
                     return i
             return 0
-    
+
         if s == None:
             return ""
         elif is_palindrome(s):
             return s
-        
+
         i = contains_palindrome(s)
         word = s
         for i in range(i, len(s)):
             char = s[i]
             if i != 0:
-                word = (word[::-1]+char)[::-1]
+                word = (word[::-1] + char)[::-1]
                 if is_palindrome(word):
                     return word
 
@@ -637,23 +639,99 @@ class Solution:
         longest_prefix = LongestPrefixTrie()
         for number in arr1:
             longest_prefix.insert(number)
-        
+
         longest = 0
         for number in arr2:
             number_len = len(str(number))
             if number_len > longest:
                 length = longest_prefix.search(number)
-                longest = length if length>longest else longest
-        
+                longest = length if length > longest else longest
+
         return longest
 
+    def removeNthFromEnd(
+        self, head: Optional[ListNode], n: int
+    ) -> Optional[ListNode]:
+        # TODO
+        node = head
+        i = 1
+        while node.next is not None:
+            previous = node
+            node = head.next
+            i += 1
+            if i == n:
+                previous.next = node.next
+                break
+        return head
 
+    def canArrange(self, arr: List[int], k: int) -> bool:
+        # TODO
+        options = set()
+        for i, num1 in enumerate(arr):
+            for i2 in range(i + 1, len(arr)):
+                if (num1 + arr[i2]) % k == 0:
+                    options.add((num1, arr[i2]))
+        options
 
+    def dividePlayers(self, skill: List[int]) -> int:
+        # 2491
+        # can be speed up by sorting and taking first and last element
+        sum_skill = sum(skill)
+        if len(skill) == 2:
+            return skill[0] * skill[1]
+        if sum_skill % (len(skill) // 2) != 0:
+            return -1
+        else:
+            search_total = int(sum_skill / (len(skill) / 2))
+            selected_pairs = []
+            while len(skill) != 0:
+                number = skill.pop()
+                index_pair = (
+                    skill.index(search_total - number)
+                    if int(search_total - number) in skill
+                    else None
+                )
+                if index_pair is None:
+                    return -1
+                pair = skill.pop(index_pair)
+                selected_pairs.append([number, pair])
+        return sum([item[0] * item[1] for item in selected_pairs])
+
+    def mergeKLists(
+        self, lists: List[Optional[ListNode]]
+    ) -> Optional[ListNode]:
+        # 23
+        all_lists = []
+        if not lists:
+            return None
+        if len(lists) == 1:
+            return lists[0]
+    
+        for item in lists:
+            if item:
+                all_lists.extend([item.val])
+                while item.next is not None:
+                    item = item.next
+                    all_lists.extend([item.val])
+
+        all_lists.sort()
+        list_node = None
+        for i, item in enumerate(all_lists):
+            if i == 0:
+                list_node = ListNode(val=item)
+            else:
+                node = list_node
+                while node.next is not None:
+                    node = node.next
+                node.next = ListNode(val=item)
+        return list_node
 
 print(
-    Solution().longestCommonPrefix(
-       arr1 = [27,45], arr2 = [27,48]
+    Solution().mergeKLists(
+        lists=[
+            ListNode.create_listnodes([1, 4, 5]),
+            ListNode.create_listnodes([1, 3, 4]),
+            ListNode.create_listnodes([2, 6]),
+        ]
     )
 )
-
-

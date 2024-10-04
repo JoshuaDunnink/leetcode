@@ -1,13 +1,12 @@
-
 class MyCalendarTwo:
     """731
     https://leetcode.com/problems/my-calendar-ii/description/?envType=daily-question&envId=2024-09-27
     to be completed
     """
+
     def __init__(self):
         # self.bookings = defaultdict(int)
-        self.bookings = {0:[], 1:[]}
-        
+        self.bookings = {0: [], 1: []}
 
     def book(self, start: int, end: int) -> bool:
         # if not self.check(start, end):
@@ -20,8 +19,8 @@ class MyCalendarTwo:
     def try_booking(self, start, end, key=0):
         possible = [True]
         for values in self.bookings[key]:
-                # [new]
-                #       [old]
+            # [new]
+            #       [old]
             if values[0] > end:
                 if key >= 2:
                     possible.append(True)
@@ -55,6 +54,7 @@ class MyCalendarTwo:
             return True
         else:
             return False
+
 
 # cal = MyCalendarTwo()
 # cal.book(0, 100)
