@@ -726,12 +726,38 @@ class Solution:
                 node.next = ListNode(val=item)
         return list_node
 
+    def maxWidthRamp(self, nums: List[int]) -> int:
+        # brute, TLE
+        max_width = 0
+        for i in range(len(nums)):
+            j = len(nums)-1
+            while i < j:
+                if nums[i] <= nums[j]:
+                    width = j - i
+                    max_width = width if width > max_width else max_width
+                j -= 1
+        return max_width
+
+    def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
+        #1942 TODO: and now with heapq?
+        timetable = []
+        for number, (arive, leave) in enumerate(times):
+            timetable.extend([[arive, number, "a"],[leave, number, "l"]])
+        timetable = sorted(timetable, key=lambda item: (item[0], item[2] != "l"))
+
+        seats = ["x"]*len(times)
+        for event in timetable:
+            if event[2] == "a":
+                seat_number = seats.index("x")
+                seats[seat_number] = event[1]
+                if event[1] == targetFriend:
+                    return seat_number
+            else:
+                seats[seats.index(event[1])] = "x"
+
+
 print(
-    Solution().mergeKLists(
-        lists=[
-            ListNode.create_listnodes([1, 4, 5]),
-            ListNode.create_listnodes([1, 3, 4]),
-            ListNode.create_listnodes([2, 6]),
-        ]
+    Solution().smallestChair(
+        times = [[18,19],[10,11],[21,22],[5,6],[2,3],[6,7],[43,44],[48,49],[53,54],[12,13],[20,21],[34,35],[17,18],[1,2],[35,36],[16,17],[9,10],[14,15],[25,26],[37,38],[30,31],[50,51],[22,23],[3,4],[27,28],[29,30],[33,34],[39,40],[49,50],[15,16],[4,5],[46,47],[51,52],[32,33],[11,12],[28,29],[47,48],[36,37],[40,41],[42,43],[52,53],[41,42],[31,32],[23,24],[8,9],[19,20],[24,25],[26,27],[45,46],[44,45],[7,8],[13,14],[38,39]], targetFriend = 8
     )
 )
