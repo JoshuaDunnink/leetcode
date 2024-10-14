@@ -4,6 +4,8 @@ import re
 import pprint
 from nodes import ListNode
 from trie import LongestPrefixTrie
+import math
+import heapq
 
 
 class Solution:
@@ -755,9 +757,21 @@ class Solution:
             else:
                 seats[seats.index(event[1])] = "x"
 
+    def maxKelements(self, nums: List[int], k: int) -> int:
+        #2530 first time using heapq
+        total = 0
+        heap = []
+        [heapq.heappush(heap, -num)for num in nums]
+        for _ in range(k):
+            max_val = heapq.heappop(heap)
+            heapq.heappush(heap, (math.ceil(-max_val/3))*-1)
+            total-=max_val
+        return total
+
 
 print(
-    Solution().smallestChair(
-        times = [[18,19],[10,11],[21,22],[5,6],[2,3],[6,7],[43,44],[48,49],[53,54],[12,13],[20,21],[34,35],[17,18],[1,2],[35,36],[16,17],[9,10],[14,15],[25,26],[37,38],[30,31],[50,51],[22,23],[3,4],[27,28],[29,30],[33,34],[39,40],[49,50],[15,16],[4,5],[46,47],[51,52],[32,33],[11,12],[28,29],[47,48],[36,37],[40,41],[42,43],[52,53],[41,42],[31,32],[23,24],[8,9],[19,20],[24,25],[26,27],[45,46],[44,45],[7,8],[13,14],[38,39]], targetFriend = 8
+    Solution().maxKelements(
+        nums = [1,10,3,3,3], k = 3
     )
 )
+
