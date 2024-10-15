@@ -767,11 +767,22 @@ class Solution:
             heapq.heappush(heap, (math.ceil(-max_val/3))*-1)
             total-=max_val
         return total
+    
+    def minimumSteps(self, s: str) -> int:
+        #2938
+        total_counter = 0
+        counter = 0
 
+        for char in s[::-1]:
+            if char == "0":
+                counter += 1
+            else:
+                total_counter += counter
+        return total_counter
 
 print(
-    Solution().maxKelements(
-        nums = [1,10,3,3,3], k = 3
+    Solution().minimumSteps(
+        s = "101000"
     )
 )
 
