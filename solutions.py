@@ -798,7 +798,6 @@ class Solution:
         lengts = []
         if sum(nums) < target:
             return 0
-
         left = 0
         for right in range(len(nums)):
             curr_sum += nums[right]
@@ -806,15 +805,45 @@ class Solution:
                 lengts.append(right-left+1)
                 curr_sum -= nums[left]
                 left += 1
-
         return min(lengts)
 
+    def findSecretWord(self, words: List[str], master: 'Master') -> None:
+        #google 2023
+        # TODO how to get the number of geusses down???
+        def get_similars(word, words, number_correct):
+            possible = []
+            for word_2 in words:
+                matches = sum(
+                    [1 for char_1 in word for char_2 in word_2 if char_1 == char_2]
+                )
+                if matches >= number_correct:
+                    possible.append(word_2)
+            return possible
+        
+        while words:
+            word = words.pop()
+            number_correct = master.geuss(word)
+            if number_correct == 6:
+                break
+            words = get_similars(word, words, number_correct)
 
+
+    def kthFactor(self, n: int, k: int) -> int:
+        #1492
+        count = 0
+        factors = []
+        for i in range(1, n+1):
+            if n%i==0:
+                count += 1
+                factors.append(i)
+                if count == k:
+                    return i
+        return -1
 
 
 print(
-    Solution().minSubArrayLen(
-        target = 7, nums = [2,3,1,2,4,3]
+    Solution().kthFactor(
+        n = 12, k = 3
     )
 )
 
