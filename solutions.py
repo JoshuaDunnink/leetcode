@@ -780,9 +780,41 @@ class Solution:
                 total_counter += counter
         return total_counter
 
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        # 209
+        # # TLE
+        # window = 1
+        # while window <= len(nums):
+        #     arr_len = len(nums)
+        #     position = 0
+        #     while position+window <= arr_len:
+        #         if sum(nums[position:position+window]) >= target:
+        #             return window
+        #         position += 1
+        #     window += 1
+        # return 0
+        # Sliding Window
+        curr_sum = 0
+        lengts = []
+        if sum(nums) < target:
+            return 0
+
+        left = 0
+        for right in range(len(nums)):
+            curr_sum += nums[right]
+            while curr_sum >= target:
+                lengts.append(right-left+1)
+                curr_sum -= nums[left]
+                left += 1
+
+        return min(lengts)
+
+
+
+
 print(
-    Solution().minimumSteps(
-        s = "101000"
+    Solution().minSubArrayLen(
+        target = 7, nums = [2,3,1,2,4,3]
     )
 )
 
