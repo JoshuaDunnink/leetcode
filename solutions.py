@@ -840,10 +840,28 @@ class Solution:
                     return i
         return -1
 
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        # 88
+        intermediate = sorted(nums1[:m]+nums2)
+        for i in range(len(nums1)):
+            nums1[i] = intermediate[i]
+
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # 80
+        i = 2
+        while i < len(nums):
+            if nums[i-1] == nums[i-2] == nums[i]:
+                nums.remove(nums[i])
+                i -= 1
+            i += 1
+        return len(nums)
 
 print(
-    Solution().kthFactor(
-        n = 12, k = 3
+    Solution().removeDuplicates(
+       nums = [1,1,1,1,1,1,1,1,2,2,3]
     )
 )
 
