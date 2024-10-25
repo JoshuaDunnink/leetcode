@@ -879,9 +879,18 @@ class Solution:
         nums[:] = (nums+nums)[abs(k-l_nums):abs(l_nums-k)+l_nums]
 
 
+    def maxProfit(self, prices: List[int]) -> int:
+        # 121
+        bought = max(prices)
+        profit = 0
+        for num in prices:
+            if num > bought:
+                profit = max(num-bought, profit)
+            bought = num if num < bought else bought
+        return profit
 print(
-    Solution().rotate(
-       nums = [1,2,3], k = 4
+    Solution().maxProfit(
+       prices = [2,1,2,1,0,1,2]
     )
 )
 
