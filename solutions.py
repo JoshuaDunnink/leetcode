@@ -880,17 +880,18 @@ class Solution:
 
 
     def maxProfit(self, prices: List[int]) -> int:
-        # 121
+        # 121 changed for 122
         bought = max(prices)
         profit = 0
         for num in prices:
             if num > bought:
-                profit = max(num-bought, profit)
+                profit += num-bought
+                bought = num
             bought = num if num < bought else bought
         return profit
 print(
     Solution().maxProfit(
-       prices = [2,1,2,1,0,1,2]
+       prices = [7,6,4,3,1]
     )
 )
 
