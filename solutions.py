@@ -889,9 +889,20 @@ class Solution:
                 bought = num
             bought = num if num < bought else bought
         return profit
-print(
-    Solution().maxProfit(
-       prices = [7,6,4,3,1]
-    )
-)
+        
+    def hIndex(self, citations: List[int]) -> int:
+        # 274
+        citations.sort(reverse=True)
+        count = 0
+        for i, cite in enumerate(citations, start=1):
+            if cite >= i:
+                count += 1
+            else:
+                break
+        return count
 
+print(
+    Solution().hIndex(
+       citations = [1]
+)
+)
