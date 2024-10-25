@@ -859,9 +859,29 @@ class Solution:
             i += 1
         return len(nums)
 
+    def majorityElement(self, nums: List[int]) -> int:
+        # 169
+        from collections import defaultdict
+        count = defaultdict(int)
+        for num in nums:
+            count[num] += 1
+    
+        return max(count, key=count.get)
+        
+    def rotate(self, nums: List[int], k: int) -> None:
+        # 189
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        l_nums = len(nums)
+        while k > l_nums:
+            k = k - l_nums
+        nums[:] = (nums+nums)[abs(k-l_nums):abs(l_nums-k)+l_nums]
+
+
 print(
-    Solution().removeDuplicates(
-       nums = [1,1,1,1,1,1,1,1,2,2,3]
+    Solution().rotate(
+       nums = [1,2,3], k = 4
     )
 )
 
