@@ -901,8 +901,13 @@ class Solution:
                 break
         return count
 
+    def reverseWords(self, s: str) -> str:
+        #151
+        return ' '.join(s.strip().split()[::-1])
+
+
 print(
-    Solution().hIndex(
-       citations = [1]
-)
+    Solution().candy(
+          [1,3,2,2,1]
+    )
 )
